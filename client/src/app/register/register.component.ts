@@ -2,6 +2,7 @@ import { error } from 'protractor';
 import { AccountService } from './../_services/account.service';
 import { environment } from './../../environments/environment.prod';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -11,7 +12,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class RegisterComponent implements OnInit {
   @Output() cancelRegister:EventEmitter<boolean>=new EventEmitter();
   model: any = {};
-  constructor(private accountService:AccountService) { }
+  constructor(private accountService:AccountService,private toaster:ToastrService) { }
 
   ngOnInit(): void {
   }
@@ -22,6 +23,7 @@ export class RegisterComponent implements OnInit {
       this.cancel();
     },error=>{
       console.log(error);
+      this.toaster.error(error.error);
     });
   }
   cancel(){
